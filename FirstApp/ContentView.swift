@@ -13,15 +13,29 @@ import SpriteKit
 struct ContentView: View {
     @State var rotationOffset = CGSize.zero
     
-    var body: some View {
+			    var body: some View {
         NavigationStack {
             List {
                 NavigationLink{
                     let scene = RedSquare()
-                    let _ = scene.changeToWhite()
                     SceneView(scene: scene, pointOfView: scene.cameraNode)
                         .ignoresSafeArea()
                 } label: { Text("Lab 1") }
+                NavigationLink {
+                    let scene = RotatingColouredCube()
+                    SceneView(scene: scene, pointOfView: scene.cameraNode)
+                        .ignoresSafeArea()
+                } label: {
+                    Text("Lab 2")
+                }
+                NavigationLink {
+                    let scene = RotatingCrate()
+                    SceneView(scene: scene, pointOfView: scene.cameraNode)
+                        .ignoresSafeArea()
+                } label: {
+                    Text("Lab 3")
+                }
+                
             }.navigationTitle("COMP8051")
         }
     }
