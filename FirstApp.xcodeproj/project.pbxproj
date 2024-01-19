@@ -20,6 +20,7 @@
 		E2F3EEEE2B5AFDAA007981F4 /* crate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2F3EEED2B5AFDAA007981F4 /* crate.jpg */; };
 		E2F3EEF22B5B02B5007981F4 /* box.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F3EEF12B5B02B5007981F4 /* box.png */; };
 		E2F3EEF72B5B125D007981F4 /* face.gif in Resources */ = {isa = PBXBuildFile; fileRef = E2F3EEF62B5B125D007981F4 /* face.gif */; };
+		E2F3EEF92B5B1357007981F4 /* Assignment01.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F3EEF82B5B1357007981F4 /* Assignment01.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,8 +56,8 @@
 		E2F3EEEB2B5AFD96007981F4 /* Lab03.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Lab03.swift; path = ../../../Downloads/Lab03.swift; sourceTree = "<group>"; };
 		E2F3EEED2B5AFDAA007981F4 /* crate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = crate.jpg; path = ../../../Downloads/C8051Labs/C8051Labs/crate.jpg; sourceTree = "<group>"; };
 		E2F3EEF12B5B02B5007981F4 /* box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box.png; sourceTree = "<group>"; };
-		E2F3EEF32B5B0BB9007981F4 /* face.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = face.gif; path = ../../../Downloads/face.gif; sourceTree = "<group>"; };
-		E2F3EEF62B5B125D007981F4 /* face.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = face.gif; path = FirstApp/face.gif; sourceTree = "<group>"; };
+		E2F3EEF62B5B125D007981F4 /* face.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = face.gif; sourceTree = "<group>"; };
+		E2F3EEF82B5B1357007981F4 /* Assignment01.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assignment01.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,7 +88,6 @@
 		E29F55142B4F36520016973B = {
 			isa = PBXGroup;
 			children = (
-				E2F3EEF62B5B125D007981F4 /* face.gif */,
 				E29F551F2B4F36520016973B /* FirstApp */,
 				E29F55302B4F36550016973B /* FirstAppTests */,
 				E29F553A2B4F36550016973B /* FirstAppUITests */,
@@ -108,12 +108,13 @@
 		E29F551F2B4F36520016973B /* FirstApp */ = {
 			isa = PBXGroup;
 			children = (
+				E2F3EEF82B5B1357007981F4 /* Assignment01.swift */,
+				E2F3EEF62B5B125D007981F4 /* face.gif */,
 				E29F55202B4F36520016973B /* FirstAppApp.swift */,
 				E29F55222B4F36520016973B /* ContentView.swift */,
 				E2F3EEEB2B5AFD96007981F4 /* Lab03.swift */,
 				E2F3EEE92B5AF6DE007981F4 /* Lab02.swift */,
 				E29F554A2B4F39180016973B /* Lab01.swift */,
-				E2F3EEF32B5B0BB9007981F4 /* face.gif */,
 				E29F55242B4F36550016973B /* Assets.xcassets */,
 				E2F3EEF12B5B02B5007981F4 /* box.png */,
 				E2F3EEED2B5AFDAA007981F4 /* crate.jpg */,
@@ -285,6 +286,7 @@
 				E29F55212B4F36520016973B /* FirstAppApp.swift in Sources */,
 				E29F554B2B4F39180016973B /* Lab01.swift in Sources */,
 				E2F3EEEA2B5AF6DE007981F4 /* Lab02.swift in Sources */,
+				E2F3EEF92B5B1357007981F4 /* Assignment01.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
