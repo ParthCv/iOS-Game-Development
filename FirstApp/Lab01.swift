@@ -27,6 +27,8 @@ class RedSquare: SCNScene {
         addSquare()
     }
     
+    //coment
+    
     // Function to setup the camera node
     func setupCamera() {
         let camera = SCNCamera() // Create Camera object
