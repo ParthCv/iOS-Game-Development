@@ -18,6 +18,8 @@
 		E2D79C8C2B61865400155E5C /* Lab02.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D79C8B2B61865400155E5C /* Lab02.swift */; };
 		E2D79C8E2B61865F00155E5C /* Lab01.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D79C8D2B61865F00155E5C /* Lab01.swift */; };
 		E2D79C902B61866B00155E5C /* crate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2D79C8F2B61866B00155E5C /* crate.jpg */; };
+		E2D79C922B61B42700155E5C /* Lab05.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D79C912B61B42700155E5C /* Lab05.swift */; };
+		E2D79C942B61B43700155E5C /* Lab04.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D79C932B61B43700155E5C /* Lab04.swift */; };
 		E2F3EEF22B5B02B5007981F4 /* box.png in Resources */ = {isa = PBXBuildFile; fileRef = E2F3EEF12B5B02B5007981F4 /* box.png */; };
 		E2F3EEF72B5B125D007981F4 /* face.gif in Resources */ = {isa = PBXBuildFile; fileRef = E2F3EEF62B5B125D007981F4 /* face.gif */; };
 		E2F3EEF92B5B1357007981F4 /* Assignment01.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F3EEF82B5B1357007981F4 /* Assignment01.swift */; };
@@ -55,6 +57,8 @@
 		E2D79C8B2B61865400155E5C /* Lab02.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lab02.swift; sourceTree = "<group>"; };
 		E2D79C8D2B61865F00155E5C /* Lab01.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lab01.swift; sourceTree = "<group>"; };
 		E2D79C8F2B61866B00155E5C /* crate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = crate.jpg; sourceTree = "<group>"; };
+		E2D79C912B61B42700155E5C /* Lab05.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lab05.swift; sourceTree = "<group>"; };
+		E2D79C932B61B43700155E5C /* Lab04.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lab04.swift; sourceTree = "<group>"; };
 		E2F3EEF12B5B02B5007981F4 /* box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = box.png; sourceTree = "<group>"; };
 		E2F3EEF62B5B125D007981F4 /* face.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = face.gif; sourceTree = "<group>"; };
 		E2F3EEF82B5B1357007981F4 /* Assignment01.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assignment01.swift; sourceTree = "<group>"; };
@@ -116,7 +120,9 @@
 				E2D79C8D2B61865F00155E5C /* Lab01.swift */,
 				E2D79C8B2B61865400155E5C /* Lab02.swift */,
 				E29F55222B4F36520016973B /* ContentView.swift */,
+				E2D79C932B61B43700155E5C /* Lab04.swift */,
 				E29F55242B4F36550016973B /* Assets.xcassets */,
+				E2D79C912B61B42700155E5C /* Lab05.swift */,
 				E2F3EEF12B5B02B5007981F4 /* box.png */,
 				E29F55262B4F36550016973B /* Preview Content */,
 			);
@@ -282,7 +288,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2D79C8A2B61864500155E5C /* Lab03.swift in Sources */,
+				E2D79C942B61B43700155E5C /* Lab04.swift in Sources */,
 				E29F55232B4F36520016973B /* ContentView.swift in Sources */,
+				E2D79C922B61B42700155E5C /* Lab05.swift in Sources */,
 				E2D79C8E2B61865F00155E5C /* Lab01.swift in Sources */,
 				E29F55212B4F36520016973B /* FirstAppApp.swift in Sources */,
 				E2F3EEF92B5B1357007981F4 /* Assignment01.swift in Sources */,
@@ -450,8 +458,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FirstApp/Preview Content\"";
+				DEVELOPMENT_TEAM = J2BLHYCNW6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "iOS Dev";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -478,8 +488,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FirstApp/Preview Content\"";
+				DEVELOPMENT_TEAM = J2BLHYCNW6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "iOS Dev";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

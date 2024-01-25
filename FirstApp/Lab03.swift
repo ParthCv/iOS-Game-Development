@@ -107,4 +107,3 @@ class RotatingCrate: SCNScene {
         isRotating = !isRotating // Toggle rotation
     }
 }
-

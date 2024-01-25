@@ -64,7 +64,7 @@ class ControlableRotatingCrate: SCNScene {
         } else {
             rot = rotAngle // Let the rot variable follow the drag gesture
         }
-        theCube?.eulerAngles = SCNVector3(Double(rot.height / 50), Double(rot.width / 50), 0) // Set the cube rotation to the numbers given from the drag gesture
+        theCube?.eulerAngles = SCNVector3(Double(rot.height / 50),0, Double(rot.width / 50)) // Set the cube rotation to the numbers given from the drag gesture
         // Repeat increment of rotation every 10000 nanoseconds
         Task { try! await Task.sleep(nanoseconds: 10000)
             reanimate()

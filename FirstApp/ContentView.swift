@@ -13,7 +13,9 @@ import SpriteKit
 struct ContentView: View {
     @State var rotationOffset = CGSize.zero
     
-			    var body: some View {
+
+    
+    var body: some View {
         NavigationStack {
             List {
                 NavigationLink{
@@ -35,7 +37,61 @@ struct ContentView: View {
                 } label: {
                     Text("Lab 3")
                 }
-                
+                NavigationLink {
+                    let scene = Assignment01()
+                    SceneView(scene: scene, pointOfView: scene.cameraNode)
+                        .ignoresSafeArea()
+                        .onTapGesture(count: 2) {
+                            scene.handleDoubleTap()
+                        }
+                        .gesture(
+                            DragGesture()
+                                .onChanged{ gesture in
+                                    scene.handleDrag(offset: gesture.translation)
+                                }
+                        ).gesture(
+                            MagnifyGesture()
+                                .onChanged{ gesture in
+                                    scene.processPinch(f: gesture.magnification)
+                                }
+                        )
+
+                } label: {
+                    Text("Assign 1")
+                }
+                NavigationLink{
+                    let scene = ControlableRotatingCrate()
+                    SceneView(scene: scene, pointOfView: scene.cameraNode)
+                        .ignoresSafeArea()
+                        .onTapGesture(count: 2) {
+                            scene.handleDoubleTap()
+                        }
+                        .gesture(
+                            DragGesture()
+                                .onChanged{ gesture in
+                                    scene.handleDrag(offset: gesture.translation)
+                                }
+                        )
+                        
+                } label: { Text("Lab 4: Rotatable cube") }
+                NavigationLink{
+                    let scene = ControlableRotatingCrate()
+                    ZStack {
+                        SceneView(scene: scene, pointOfView: scene.cameraNode)
+                            .ignoresSafeArea()
+                            .onTapGesture(count: 2) {
+                                scene.handleDoubleTap()
+                            }
+                            .gesture(
+                                DragGesture()
+                                    .onChanged{ gesture in
+                                        scene.handleDrag(offset: gesture.translation)
+                                    }
+                            )
+                        Text("Hello World")
+                            .foregroundStyle(.white)
+                    }
+                } label: { Text("Lab 5: Text examples") }
             }.navigationTitle("COMP8051")
         }
     }
