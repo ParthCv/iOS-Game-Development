@@ -12,8 +12,7 @@ import SpriteKit
 
 struct ContentView: View {
     @State var rotationOffset = CGSize.zero
-    
-
+    @State var stringPositionOfCube = "xyz: pos"
     
     var body: some View {
         NavigationStack {
@@ -39,22 +38,39 @@ struct ContentView: View {
                 }
                 NavigationLink {
                     let scene = Assignment01()
-                    SceneView(scene: scene, pointOfView: scene.cameraNode)
-                        .ignoresSafeArea()
-                        .onTapGesture(count: 2) {
-                            scene.handleDoubleTap()
+                    ZStack{
+                        SceneView(scene: scene, pointOfView: scene.cameraNode)
+                            .ignoresSafeArea()
+                            .onTapGesture(count: 2) {
+                                scene.handleDoubleTap()
+                            }
+                            .gesture(
+                                DragGesture()
+                                    .onChanged{ gesture in
+                                        scene.handleDrag(offset: gesture.translation)
+                                    }
+                            ).gesture(
+                                MagnifyGesture()
+                                    .onChanged{ gesture in
+                                        scene.processPinch(magnification: gesture.magnification)
+                                    }
+                            )
+                        
+                        HStack(alignment: .center, spacing: 20 ) {
+                            Button {
+                                //print("Reset")
+                                scene.handleResetButton()
+                            } label: {
+                                Text("Reset")
+                                    .font(.title2)
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .shadow(color: .blue,radius: 10,y: 2)
+                            Text("xyz: pos \(scene.cubePosition())")
+                                .padding(20)
                         }
-                        .gesture(
-                            DragGesture()
-                                .onChanged{ gesture in
-                                    scene.handleDrag(offset: gesture.translation)
-                                }
-                        ).gesture(
-                            MagnifyGesture()
-                                .onChanged{ gesture in
-                                    scene.processPinch(f: gesture.magnification)
-                                }
-                        )
+                        
+                    }
 
                 } label: {
                     Text("Assign 1")
