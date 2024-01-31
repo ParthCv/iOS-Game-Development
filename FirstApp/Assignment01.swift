@@ -1,4 +1,5 @@
 import SceneKit
+import SpriteKit
 
 class Assignment01: SCNScene {
     //Initialize the camera
@@ -6,14 +7,29 @@ class Assignment01: SCNScene {
     //Main cube
     var cubeMain = SCNNode()
     
+    var cubeSecond = SCNNode()
+    
+    var flashLightNode = SCNNode()
+    
+    var ambientLightNode = SCNNode()
+    
+    var diffuseLightNode = SCNNode()
+    
     //var positionText = SCNNode()
     
     var rotAngle = CGSize.zero
     
     var rot = CGSize.zero
     
+    var scndRot = 0.0
+    
     var isRotating = true
-        
+    
+    var isFlashlightOn: Bool = true
+    
+    var isAmbientLightOn: Bool = true
+    
+    var isDiffuseLightOn: Bool = true
     
     //Check for failure in initialization
     required init?(coder aDecoder: NSCoder) {
@@ -28,6 +44,11 @@ class Assignment01: SCNScene {
         
         setUpCamera()
         addMainCube()
+        addSecondCube()
+        setDummyLight()
+        setupAmbientLight() // try commenting out this line
+        setupFlashlight()
+        setupDiffuseLight()
         //addPositionText()
         Task(priority: .userInitiated) {
             await firstUpdate()
@@ -67,6 +88,28 @@ class Assignment01: SCNScene {
         
     }
     
+    func addSecondCube() {
+        let cube = SCNNode(geometry: SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0))
+        
+        cube.name = "Cube_2"
+        
+        let cubeFaceTextures = [UIImage(named: "texture1"), UIImage(named: "texture2"), UIImage(named: "texture3"), UIImage(named: "texture4"), UIImage(named: "texture5"), UIImage(named: "texture6")]
+        
+        cube.geometry?.firstMaterial?.diffuse.contents = cubeFaceTextures[0]
+        
+        var faceMaterial: SCNMaterial
+        
+        for (index, texture) in cubeFaceTextures.enumerated() {
+            faceMaterial = SCNMaterial()
+            faceMaterial.diffuse.contents = texture
+            cube.geometry?.insertMaterial(faceMaterial, at: index)
+        }
+        
+        cube.position = SCNVector3(0,-8,0)
+        cubeSecond = cube
+        rootNode.addChildNode(cube)
+    }
+    
     func addPositionText() {
         let textGeomentry = SCNText(string: "Position of the cube -> ", extrusionDepth: 1.0)
         textGeomentry.font = UIFont(name: "Arial", size: 35)
@@ -78,7 +121,75 @@ class Assignment01: SCNScene {
         
         rootNode.addChildNode(positionText)
     }
+    
+    // Sets up an ambient light (all around)
+    func setupAmbientLight() {
+        let ambientLight = SCNNode() // Create a SCNNode for the lamp
+        ambientLight.light = SCNLight() // Add a new light to the lamp
+        ambientLight.light!.type = .ambient // Set the light type to ambient
+        ambientLight.light!.color = UIColor.white // Set the light color to white
+        ambientLight.light!.intensity = 500// Set the light intensity to 5000 lumins (1000 is default)
+        rootNode.addChildNode(ambientLight) // Add the lamp node to the scene
+        ambientLightNode = ambientLight
+    }
+    
+    // Sets up a directional light (flashlight)
+    func setupFlashlight() {
+        let lightNode = SCNNode()
+        lightNode.name = "Flashlight"
+        lightNode.light = SCNLight()
+        lightNode.light!.type = SCNLight.LightType.spot
+        lightNode.light!.castsShadow = true
+        lightNode.light!.color = UIColor.yellow
+        lightNode.light!.intensity = 5000
+        lightNode.position = SCNVector3(0, 5, 3)
+        lightNode.rotation = SCNVector4(1, 0, 0, -Double.pi/3)
+        lightNode.light!.spotInnerAngle = 0
+        lightNode.light!.spotOuterAngle = 10.0
+        lightNode.light!.shadowColor = UIColor.black
+        lightNode.light!.zFar = 500
+        lightNode.light!.zNear = 50
+        rootNode.addChildNode(lightNode)
+        
+        flashLightNode = lightNode
+    }
 
+    func setupDiffuseLight() {
+        let directionalLight = SCNNode() // Create a SCNNode for the lamp
+        directionalLight.name = "Directional Light" // Name the node so we can reference it later
+        directionalLight.light = SCNLight() // Add a new light to the lamp
+        directionalLight.light!.type = .directional // Set the light type to directional
+        directionalLight.light!.color = UIColor.green // Set the light color to white
+        directionalLight.light!.intensity = 20000 // Set the light intensity to 20000 lumins (1000 is default)
+        directionalLight.rotation = SCNVector4(0, 0, 0, Double.pi/2)  // Set the rotation of the light from the flashlight to the flashlight position variable
+        rootNode.addChildNode(directionalLight) // Add the lamp node to the scene
+        
+        diffuseLightNode = directionalLight
+    }
+    
+    func setDummyLight() {
+        let dummyLight = SCNNode()
+        dummyLight.name = "Dummy Light"
+        dummyLight.light = SCNLight()
+        dummyLight.light!.type = .directional
+        dummyLight.light!.color = UIColor.black
+        dummyLight.light!.intensity = 0
+        
+        rootNode.addChildNode(dummyLight)
+    }
+    
+    func setAmbientLight() {
+        isAmbientLightOn = !isAmbientLightOn
+    }
+    
+    func setDiffuseLight() {
+        isDiffuseLightOn = !isDiffuseLightOn
+    }
+    
+    func setFlashLight() {
+        isFlashlightOn = !isFlashlightOn
+    }
+    
     @MainActor
     func processPinch (magnification: CGFloat) {
         if (!isRotating) {
@@ -106,9 +217,21 @@ class Assignment01: SCNScene {
         } else {
             rot = rotAngle
         }
+        
+        let _theScndCube = rootNode.childNode(withName: "Cube_2", recursively: true)
+        
+        scndRot += 0.00075
+        
+        if scndRot > Double.pi * 2 {
+            scndRot -= Double.pi * 2
+        }
+        
+        _theScndCube?.eulerAngles = SCNVector3(scndRot, scndRot, 0)
 
         _theCube?.eulerAngles = SCNVector3(Double(rot.height / 50), Double(rot.width / 50), 0)
         // Repeat increment of rotation every 10000 nanoseconds
+        
+        toggleLights()
         Task { try! await Task.sleep(nanoseconds: 10000)
             reanimate()
         }
@@ -139,10 +262,32 @@ class Assignment01: SCNScene {
     func cubePosition() -> String {
         let _theCube = rootNode.childNode(withName: "Cube_1", recursively: true)
         let _cubePosition = _theCube?.position
-        var text = "\(_cubePosition?.x ?? 1), \(_cubePosition?.z ?? 0), \(_cubePosition?.z ?? 0) + \(rot.width)"
+        let text = "\(_cubePosition?.x ?? 1), \(_cubePosition?.z ?? 0), \(_cubePosition?.z ?? 0) + \(rot.width)"
         print(text)
         return text
     }
+    
+    @MainActor
+    func toggleLights() {
+        if (isFlashlightOn) {
+            flashLightNode.isHidden = false
+        } else {
+            flashLightNode.isHidden = true
+        }
+        
+        if (isAmbientLightOn) {
+            ambientLightNode.isHidden = false
+        } else {
+            ambientLightNode.isHidden = true
+        }
+        
+        if (isDiffuseLightOn) {
+            diffuseLightNode.isHidden = false
+        } else {
+            diffuseLightNode.isHidden = true
+        }
+    }
+    
 }
 
  

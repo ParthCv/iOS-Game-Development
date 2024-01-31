@@ -12,7 +12,9 @@ import SpriteKit
 
 struct ContentView: View {
     @State var rotationOffset = CGSize.zero
-    @State var stringPositionOfCube = "xyz: pos"
+    @State var stringCubeRotation: String = ""
+    
+    private var timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         NavigationStack {
@@ -56,7 +58,7 @@ struct ContentView: View {
                                     }
                             )
                         
-                        HStack(alignment: .center, spacing: 20 ) {
+                        VStack(alignment: .center, spacing: 20 ) {
                             Button {
                                 //print("Reset")
                                 scene.handleResetButton()
@@ -66,9 +68,41 @@ struct ContentView: View {
                             }
                             .buttonStyle(.borderedProminent)
                             .shadow(color: .blue,radius: 10,y: 2)
-                            Text("xyz: pos \(scene.cubePosition())")
-                                .padding(20)
+                            Text("xyz: pos \(stringCubeRotation)")
+                                .foregroundStyle(.red.gradient)
+                                .background(.white)
+                                .padding()
+                            HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: 30) {
+                                Button {
+                                    scene.setAmbientLight()
+                                } label: {
+                                    Text("Ambient Light")
+                                        .font(.system(size: 16))
+                                        .foregroundStyle(.blue)
+                                }
+                                .buttonStyle(.plain)
+                                Button {
+                                    scene.setFlashLight()
+                                } label: {
+                                    Text("Flash Light")
+                                        .font(.system(size: 16))
+                                        .foregroundStyle(.blue)
+                                }
+                                .buttonStyle(.plain)
+                                Button {
+                                    scene.setDiffuseLight()
+                                } label: {
+                                    Text("Diffuse Light")
+                                        .font(.system(size: 16))
+                                        .foregroundStyle(.blue)
+                                }
+                                .buttonStyle(.plain)
+                            }
                         }
+                        .onReceive(timer, perform: { _ in
+                            stringCubeRotation = scene.cubePosition()
+                            print(stringCubeRotation)
+                        })
                         
                     }
 
@@ -108,6 +142,48 @@ struct ContentView: View {
                             .foregroundStyle(.white)
                     }
                 } label: { Text("Lab 5: Text examples") }
+                NavigationLink{
+                    let scene = RotatingCrateLight()
+                    SceneView(scene: scene, pointOfView: scene.cameraNode)
+                        .ignoresSafeArea()
+                        .onTapGesture(count: 2) {
+                            scene.handleDoubleTap()
+                        }
+                        .gesture(
+                            DragGesture()
+                                .onChanged{ gesture in
+                                    scene.handleDrag(offset: gesture.translation)
+                                }
+                        )
+                } label: { Text("Lab 6: Diffuse lighting") }
+                NavigationLink{
+                    let scene = RotatingCrateFlashlight()
+                    SceneView(scene: scene, pointOfView: scene.cameraNode)
+                        .ignoresSafeArea()
+                        .onTapGesture(count: 2) {
+                            scene.handleDoubleTap()
+                        }
+                        .gesture(
+                            DragGesture()
+                                .onChanged{ gesture in
+                                    scene.handleDrag(offset: gesture.translation)
+                                }
+                        )
+                } label: { Text("Lab 7: Spotlight (flashlight)") }
+                NavigationLink{
+                    let scene = RotatingCrateFog()
+                    SceneView(scene: scene, pointOfView: scene.cameraNode)
+                        .ignoresSafeArea()
+                        .onTapGesture(count: 2) {
+                            scene.handleDoubleTap()
+                        }
+                        .gesture(
+                            DragGesture()
+                                .onChanged{ gesture in
+                                    scene.handleDrag(offset: gesture.translation)
+                                }
+                        )
+                } label: { Text("Lab 8: Fog") }
             }.navigationTitle("COMP8051")
         }
     }

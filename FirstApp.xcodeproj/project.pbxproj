@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E22A7FCF2B69A58300AC54F1 /* Lab06.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A7FCE2B69A58300AC54F1 /* Lab06.swift */; };
+		E22A7FD12B69A59000AC54F1 /* Lab07.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A7FD02B69A59000AC54F1 /* Lab07.swift */; };
+		E22A7FD32B69A59900AC54F1 /* Lab08.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A7FD22B69A59900AC54F1 /* Lab08.swift */; };
 		E29F55212B4F36520016973B /* FirstAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F55202B4F36520016973B /* FirstAppApp.swift */; };
 		E29F55232B4F36520016973B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F55222B4F36520016973B /* ContentView.swift */; };
 		E29F55252B4F36550016973B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E29F55242B4F36550016973B /* Assets.xcassets */; };
@@ -43,6 +46,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E22A7FCE2B69A58300AC54F1 /* Lab06.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lab06.swift; sourceTree = "<group>"; };
+		E22A7FD02B69A59000AC54F1 /* Lab07.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lab07.swift; sourceTree = "<group>"; };
+		E22A7FD22B69A59900AC54F1 /* Lab08.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lab08.swift; sourceTree = "<group>"; };
 		E29F551D2B4F36520016973B /* FirstApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirstApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E29F55202B4F36520016973B /* FirstAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstAppApp.swift; sourceTree = "<group>"; };
 		E29F55222B4F36520016973B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -119,7 +125,10 @@
 				E2D79C8F2B61866B00155E5C /* crate.jpg */,
 				E2D79C8D2B61865F00155E5C /* Lab01.swift */,
 				E2D79C8B2B61865400155E5C /* Lab02.swift */,
+				E22A7FCE2B69A58300AC54F1 /* Lab06.swift */,
 				E29F55222B4F36520016973B /* ContentView.swift */,
+				E22A7FD02B69A59000AC54F1 /* Lab07.swift */,
+				E22A7FD22B69A59900AC54F1 /* Lab08.swift */,
 				E2D79C932B61B43700155E5C /* Lab04.swift */,
 				E29F55242B4F36550016973B /* Assets.xcassets */,
 				E2D79C912B61B42700155E5C /* Lab05.swift */,
@@ -291,9 +300,12 @@
 				E2D79C942B61B43700155E5C /* Lab04.swift in Sources */,
 				E29F55232B4F36520016973B /* ContentView.swift in Sources */,
 				E2D79C922B61B42700155E5C /* Lab05.swift in Sources */,
+				E22A7FD12B69A59000AC54F1 /* Lab07.swift in Sources */,
 				E2D79C8E2B61865F00155E5C /* Lab01.swift in Sources */,
+				E22A7FCF2B69A58300AC54F1 /* Lab06.swift in Sources */,
 				E29F55212B4F36520016973B /* FirstAppApp.swift in Sources */,
 				E2F3EEF92B5B1357007981F4 /* Assignment01.swift in Sources */,
+				E22A7FD32B69A59900AC54F1 /* Lab08.swift in Sources */,
 				E2D79C8C2B61865400155E5C /* Lab02.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -472,7 +484,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ca.bcit.FirstApp;
+				PRODUCT_BUNDLE_IDENTIFIER = "ca.bcit.FirstApp-1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
