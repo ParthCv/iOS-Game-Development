@@ -14,7 +14,7 @@ struct ContentView: View {
     @State var rotationOffset = CGSize.zero
     @State var stringCubeRotation: String = ""
     
-    private var timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
+//    private var timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         NavigationStack {
@@ -99,10 +99,10 @@ struct ContentView: View {
                                 .buttonStyle(.plain)
                             }
                         }
-                        .onReceive(timer, perform: { _ in
-                            stringCubeRotation = scene.cubePosition()
-                            print(stringCubeRotation)
-                        })
+//                        .onReceive(timer, perform: { _ in
+//                            stringCubeRotation = scene.cubePosition()
+//                            print(stringCubeRotation)
+//                        })
                         
                     }
 
