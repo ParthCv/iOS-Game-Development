@@ -1,7 +1,7 @@
 import SceneKit
 import SpriteKit
 
-class Assignment01: SCNScene, ObservableObject {
+class Assignment01: SCNScene {
     //Initialize the camera
     var cameraNode = SCNNode()
     //Main cube
@@ -51,7 +51,7 @@ class Assignment01: SCNScene, ObservableObject {
         setupAmbientLight() // try commenting out this line
         setupFlashlight()
         setupDiffuseLight()
-        //addPositionText()
+        addPositionText()
         Task(priority: .userInitiated) {
             await firstUpdate()
         }
@@ -113,15 +113,15 @@ class Assignment01: SCNScene, ObservableObject {
     }
     
     func addPositionText() {
-        let textGeomentry = SCNText(string: "Position of the cube -> ", extrusionDepth: 1.0)
-        textGeomentry.font = UIFont(name: "Arial", size: 35)
-        textGeomentry.firstMaterial?.diffuse.contents = UIColor.green
-        
-        let positionText = SCNNode(geometry:textGeomentry)
-        positionText.position = SCNVector3(1, 1, 1)
-
-        
-        rootNode.addChildNode(positionText)
+        //### Repeat the above but this time for text we will use to track angles
+        let dynamicText = SCNText(string: "123", extrusionDepth: 1.0)
+        let dynamicTextNode = SCNNode(geometry: dynamicText)
+        dynamicTextNode.name = "Dynamic Text"
+        dynamicTextNode.position = SCNVector3(x: 0, y: -5.5, z: 0) // Position below the crate
+        dynamicTextNode.scale = SCNVector3(0.05, 0.05, 0.05)
+        dynamicTextNode.eulerAngles = cameraNode.eulerAngles    // Tie the rotation to the camera so it looks 2D
+        dynamicTextNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+        rootNode.addChildNode(dynamicTextNode) // Add the text object to the scene
     }
     
     // Sets up an ambient light (all around)
@@ -208,7 +208,7 @@ class Assignment01: SCNScene, ObservableObject {
     @MainActor
     func firstUpdate() {
         reanimate() // Call reanimate on the first graphics update frame
-        handleUIUpdate()
+        //handleUIUpdate()
     }
     
     @MainActor
@@ -235,7 +235,12 @@ class Assignment01: SCNScene, ObservableObject {
         // Repeat increment of rotation every 10000 nanoseconds
         
 
-        
+        let dynamicTextNode = rootNode.childNode(withName: "Dynamic Text", recursively: true)
+        if let textGeometry = dynamicTextNode?.geometry as? SCNText {
+            textGeometry.string = String(format: "(%.2f,%.2f)", rot.height, rot.width)
+            let (minVec, maxVec) = textGeometry.boundingBox
+            dynamicTextNode?.pivot = SCNMatrix4MakeTranslation((maxVec.x - minVec.x) / 2 + minVec.x, (maxVec.y - minVec.y) / 2 + minVec.y, 0)
+        }
         toggleLights()
         Task { try! await Task.sleep(nanoseconds: 10000)
             reanimate()

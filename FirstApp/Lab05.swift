@@ -4,7 +4,7 @@
 // COMP 8051   British Columbia Institute of Technology
 // Lab05: Add text that shows rotation angle of rotating cube
 //        as well as 3D text
-// *** NOT WORKING!!
+// *** WORKING VERSION (see //### comments)
 //
 //====================================================================
 
@@ -57,13 +57,26 @@ class ControlableRotatingCrateWithText: SCNScene {
     
     // Create 3D Text
     func addText() {
-        let theText = SCNText(string: "Hello!", extrusionDepth: 1.0)
-        theText.font = UIFont(name: "Helvetica", size: 0.15)
-        theText.firstMaterial!.diffuse.contents = UIColor.red
-        
+        let theText = SCNText(string: "Hello!", extrusionDepth: 1.0)    // Try changing extrusionDepth (thickness of the text)
+        theText.flatness = 0.1  //### Lower value is smoother but can affect performance
         let theTextNode = SCNNode(geometry: theText)
-        theTextNode.position = SCNVector3(x: 1, y: 1, z: 1)
+        theTextNode.name = "Text"   //### This is necessary to look it up later in the scene to animate the text
+        theTextNode.position = SCNVector3(x: 0, y: 0, z: 0) // Try changing these to move the text around
+        theTextNode.scale = SCNVector3(0.1, 0.1, 0.1)   //### Without this the text is too big
+        //### The next two lines moves the centre of rotation to be the centre of the text:
+        let (minVec, maxVec) = theText.boundingBox
+        theTextNode.pivot = SCNMatrix4MakeTranslation((maxVec.x - minVec.x) / 2 + minVec.x, (maxVec.y - minVec.y) / 2 + minVec.y, 0)
         rootNode.addChildNode(theTextNode) // Add the text object to the scene
+
+        //### Repeat the above but this time for text we will use to track angles
+        let dynamicText = SCNText(string: "123", extrusionDepth: 1.0)
+        let dynamicTextNode = SCNNode(geometry: dynamicText)
+        dynamicTextNode.name = "Dynamic Text"
+        dynamicTextNode.position = SCNVector3(x: 0, y: -2.5, z: 0) // Position below the crate
+        dynamicTextNode.scale = SCNVector3(0.03, 0.03, 0.03)
+        dynamicTextNode.eulerAngles = cameraNode.eulerAngles    // Tie the rotation to the camera so it looks 2D
+        dynamicTextNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+        rootNode.addChildNode(dynamicTextNode) // Add the text object to the scene
     }
 
     @MainActor
@@ -73,13 +86,41 @@ class ControlableRotatingCrateWithText: SCNScene {
     
     @MainActor
     func reanimate() {
+        print("Debug")
         let theCube = rootNode.childNode(withName: "The Cube", recursively: true) // Get the cube object by its name (This is where line 45 comes in)
         if (isRotating) {
             rot.width += 0.05 // Increment rotation of the cube by 0.0005 radians
+            if (rot.width >= 2*Double.pi*50) {
+                rot.width = 0.0
+            }
         } else {
             rot = rotAngle // Let the rot variable follow the drag gesture
+            if (rot.width >= 2*Double.pi*50) {
+                rot.width = 0.0
+            }
+            if (rot.height >= 2*Double.pi*50) {
+                rot.height = 0.0
+            }
         }
-        theCube?.eulerAngles = SCNVector3(Double(rot.height / 50), Double(rot.width / 50), 0) // Set the cube rotation to the numbers given from the drag gesture
+        var rotX = Double(rot.height / 50)
+        var rotY = Double(rot.width / 50)
+        theCube?.eulerAngles = SCNVector3(rotX, rotY, 0) // Set the cube rotation to the numbers given from the drag gesture
+        //### These lines rotate the text
+        let theText = rootNode.childNode(withName: "Text", recursively: true)
+        textX += 0.00005
+        if (textX >= 2*Double.pi) {
+            textX = 0.0
+        }
+        theText?.eulerAngles = SCNVector3(0, textX, 0)
+        //### These lines set the dynamic text to report the rotation angles of the crate
+        let dynamicTextNode = rootNode.childNode(withName: "Dynamic Text", recursively: true)
+        if let textGeometry = dynamicTextNode?.geometry as? SCNText {
+            rotX *= 180.0 / Double.pi
+            rotY *= 180.0 / Double.pi
+            textGeometry.string = String(format: "(%.2f,%.2f)", rotX, rotY)
+            let (minVec, maxVec) = textGeometry.boundingBox
+            dynamicTextNode?.pivot = SCNMatrix4MakeTranslation((maxVec.x - minVec.x) / 2 + minVec.x, (maxVec.y - minVec.y) / 2 + minVec.y, 0)
+        }
         // Repeat increment of rotation every 10000 nanoseconds
         Task { try! await Task.sleep(nanoseconds: 10000)
             reanimate()
@@ -95,6 +136,6 @@ class ControlableRotatingCrateWithText: SCNScene {
     @MainActor
     // Function to be called by drag gesture
     func handleDrag(offset: CGSize) {
-        rotAngle = offset // Get the width and height components of the CGSize, which only gives us two, and put them into the x and y rotations of the flashlight
+        rotAngle = offset // Get the width and height components of the CGSize, which only gives us two, and put them into the x and y rotations of the cube
     }
 }
