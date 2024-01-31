@@ -1,7 +1,7 @@
 import SceneKit
 import SpriteKit
 
-class Assignment01: SCNScene {
+class Assignment01: SCNScene, ObservableObject {
     //Initialize the camera
     var cameraNode = SCNNode()
     //Main cube
@@ -30,6 +30,8 @@ class Assignment01: SCNScene {
     var isAmbientLightOn: Bool = true
     
     var isDiffuseLightOn: Bool = true
+    
+    @Published var positionString:String = "rot: "
     
     //Check for failure in initialization
     required init?(coder aDecoder: NSCoder) {
@@ -206,6 +208,7 @@ class Assignment01: SCNScene {
     @MainActor
     func firstUpdate() {
         reanimate() // Call reanimate on the first graphics update frame
+        handleUIUpdate()
     }
     
     @MainActor
@@ -231,9 +234,23 @@ class Assignment01: SCNScene {
         _theCube?.eulerAngles = SCNVector3(Double(rot.height / 50), Double(rot.width / 50), 0)
         // Repeat increment of rotation every 10000 nanoseconds
         
+
+        
         toggleLights()
         Task { try! await Task.sleep(nanoseconds: 10000)
             reanimate()
+        }
+    }
+    
+    @MainActor
+    func handleUIUpdate() {
+        
+        DispatchQueue.main.async {
+            self.positionString = "rot: \(self.rot.width)"
+        }
+        
+        Task { try! await Task.sleep(nanoseconds: 10000000)
+                handleUIUpdate()
         }
     }
 
