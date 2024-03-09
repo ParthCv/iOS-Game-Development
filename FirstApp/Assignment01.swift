@@ -40,15 +40,15 @@ class Assignment01: SCNScene {
     
     // Initializer
     override init() {
-        super.init() // Implement the superclass' initializer
+        super.init()
         
-        background.contents = UIColor.black // Set the background colour to black
+        background.contents = UIColor.black
         
         setUpCamera()
         addMainCube()
         addSecondCube()
         setDummyLight()
-        setupAmbientLight() // try commenting out this line
+        setupAmbientLight()
         setupFlashlight()
         setupDiffuseLight()
         addPositionText()
@@ -57,16 +57,16 @@ class Assignment01: SCNScene {
         }
     }
         
-        //Set up the camera
+    //Set up the camera
     func setUpCamera() {
-        let camera = SCNCamera() //camera object
+        let camera = SCNCamera()
         cameraNode.camera = camera
         cameraNode.position = SCNVector3(5, 5, 5)
         cameraNode.eulerAngles = SCNVector3(-Float.pi/4, Float.pi/4, 0)
-        
         rootNode.addChildNode(cameraNode)
     }
     
+    //Add main cube
     func addMainCube() {
         let cube = SCNNode(geometry: SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0))
         
@@ -78,6 +78,7 @@ class Assignment01: SCNScene {
         
         var faceMaterial: SCNMaterial
         
+        //iterate over the list of materials
         for (index, material) in cubeFaceMaterials.enumerated() {
             faceMaterial = SCNMaterial()
             faceMaterial.diffuse.contents = material
@@ -89,7 +90,8 @@ class Assignment01: SCNScene {
         rootNode.addChildNode(cube)
         
     }
-    
+
+    // Add second cube
     func addSecondCube() {
         let cube = SCNNode(geometry: SCNBox(width: 1, height: 1, length: 1, chamferRadius: 0))
         
@@ -112,8 +114,8 @@ class Assignment01: SCNScene {
         rootNode.addChildNode(cube)
     }
     
+    // Add 3D text
     func addPositionText() {
-        //### Repeat the above but this time for text we will use to track angles
         let dynamicText = SCNText(string: "123", extrusionDepth: 1.0)
         let dynamicTextNode = SCNNode(geometry: dynamicText)
         dynamicTextNode.name = "Dynamic Text"
@@ -124,7 +126,7 @@ class Assignment01: SCNScene {
         rootNode.addChildNode(dynamicTextNode) // Add the text object to the scene
     }
     
-    // Sets up an ambient light (all around)
+    // Set up an ambient light
     func setupAmbientLight() {
         let ambientLight = SCNNode() // Create a SCNNode for the lamp
         ambientLight.light = SCNLight() // Add a new light to the lamp
@@ -135,7 +137,7 @@ class Assignment01: SCNScene {
         ambientLightNode = ambientLight
     }
     
-    // Sets up a directional light (flashlight)
+    // Sets up a directional light
     func setupFlashlight() {
         let lightNode = SCNNode()
         lightNode.name = "Flashlight"
@@ -156,6 +158,7 @@ class Assignment01: SCNScene {
         flashLightNode = lightNode
     }
 
+    //Setup Diffues light
     func setupDiffuseLight() {
         let directionalLight = SCNNode() // Create a SCNNode for the lamp
         directionalLight.name = "Directional Light" // Name the node so we can reference it later
@@ -169,6 +172,7 @@ class Assignment01: SCNScene {
         diffuseLightNode = directionalLight
     }
     
+    //Set a dummylight to override the default light
     func setDummyLight() {
         let dummyLight = SCNNode()
         dummyLight.name = "Dummy Light"
@@ -237,7 +241,7 @@ class Assignment01: SCNScene {
 
         let dynamicTextNode = rootNode.childNode(withName: "Dynamic Text", recursively: true)
         if let textGeometry = dynamicTextNode?.geometry as? SCNText {
-            textGeometry.string = String(format: "(%.2f,%.2f)", rot.height, rot.width)
+            textGeometry.string = String(format: "(%.2f,%.2f,%.2f)", _theCube?.eulerAngles.x ?? 0, _theCube?.eulerAngles.y ?? 0, _theCube?.eulerAngles.z ?? 0)
             let (minVec, maxVec) = textGeometry.boundingBox
             dynamicTextNode?.pivot = SCNMatrix4MakeTranslation((maxVec.x - minVec.x) / 2 + minVec.x, (maxVec.y - minVec.y) / 2 + minVec.y, 0)
         }
@@ -280,15 +284,7 @@ class Assignment01: SCNScene {
         
     }
     
-    @MainActor
-    func cubePosition() -> String {
-        let _theCube = rootNode.childNode(withName: "Cube_1", recursively: true)
-        let _cubePosition = _theCube?.position
-        let text = "\(_cubePosition?.x ?? 1), \(_cubePosition?.z ?? 0), \(_cubePosition?.z ?? 0) + \(rot.width)"
-        print(text)
-        return text
-    }
-    
+    //Toggle lights
     @MainActor
     func toggleLights() {
         if (isFlashlightOn) {
